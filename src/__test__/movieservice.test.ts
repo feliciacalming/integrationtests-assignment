@@ -39,26 +39,32 @@ jest.mock("axios", () => ({
   get: async (searchText: string) => {
     return new Promise(
       (resolve, reject) => {
-        if (searchText.length > 2) {
+        let queryString = searchText;
+        let usp = new URLSearchParams(queryString);
+        let s = usp.get("s");
+        let newSearchText = `${s}`;
+
+        if (newSearchText.length > 3) {
           resolve({ data: { Search: mockData } });
+          console.log(searchText, "NUUUUUU");
         } else {
           reject({ data: [] });
         }
       }
       //vi härmar objektet som hämtas från axios
+      //om jag sätter if searchtext.length === 1 går den över till reject
     );
   },
 }));
 
-// jest.mock("axios", () => ({
-//   get: async () => {
-//     return new Promise((resolve) => resolve({ data: { Search: mockData } }));
-//   },
-// }));
-
 describe("getData", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
   test("should get mock data", async () => {
     let searchText = "lord";
+
     //act
     let result: IMovie[] = await getData(searchText);
     console.log("hej ", result);
@@ -68,28 +74,15 @@ describe("getData", () => {
     expect(result[0].Title).toBe("Film1");
   });
 
-  //   test("should not get mockdata", async () => {
-  //   jest.mock("axios", () => ({
-  //   get: async (searchText: string) => {
-  //     return new Promise(
-  //       (resolve, reject) => {
-  //         if (searchText.length > 2) {
-  //           resolve({ data: { Search: mockData } });
-  //         } else {
-  //           reject();
-  //         }
-  //       }
-  //       //vi härmar objektet som hämtas från axios
-  //     );
-  //   },
-  // }));
-  //     //arrange
-  //     let searchText = "he";
+  test("should not get mockdata", async () => {
+    //arrange
+    let searchText = "bu";
 
-  //     //act
-  //     let result: IMovie[] = await getData(searchText);
+    //act
+    let result: IMovie[] = await getData(searchText);
 
-  //     //assert
-  //     expect(result.length).toBe(3);
-  //   });
+    //assert
+    expect(result.length).toBe(0);
+    // console.log(result);
+  });
 });

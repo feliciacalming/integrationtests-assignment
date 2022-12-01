@@ -41,9 +41,9 @@ describe("movieSort", () => {
   test("should sort list alphabetically", async () => {
     //arrange
     //act
-    console.log(movies);
+    // console.log(movies);
     functions.movieSort(movies);
-    console.log(movies);
+    // console.log(movies);
 
     //assert
     expect(movies[0].Title).toBe("Adams AW");
@@ -51,11 +51,11 @@ describe("movieSort", () => {
 
   test("should change position [2] to position [3]", async () => {
     //arrange
-    console.log(movies);
+    // console.log(movies);
 
     //act
     functions.movieSort(movies);
-    console.log(movies);
+    // console.log(movies);
 
     //assert
     expect(movies[2].Title).toBe("Karlsson på loftet");

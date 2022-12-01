@@ -28,9 +28,16 @@ let mockData: IMovie[] = [
   },
 ];
 
+// export const getData = async (searchText: string): Promise<IMovie[]> => {
+//   return new Promise((resolve, reject) => {
+//     if (searchText) resolve(mockData);
+//     else reject();
+//   });
+// };
+
 export const getData = async (searchText: string): Promise<IMovie[]> => {
   return new Promise((resolve, reject) => {
-    if (searchText) resolve(mockData);
+    if (searchText.length > 3) resolve(mockData);
     else reject();
   });
 };
