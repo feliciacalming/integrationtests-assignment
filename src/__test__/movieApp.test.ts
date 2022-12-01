@@ -11,6 +11,10 @@ import { IMovie } from "../ts/models/Movie";
 jest.mock("./../ts/services/movieservice");
 
 describe("init", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
   test("should call function handleSubmit on click", () => {
     //arrange
     document.body.innerHTML = `<form id="searchForm">
@@ -32,10 +36,13 @@ describe("init", () => {
     expect(spy).toHaveBeenCalled();
     document.body.innerHTML = "";
   });
-  document.body.innerHTML = "";
 });
 
 describe("createHtml", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
   test("should create html", async () => {
     //arrange
     let searchText = "moooo";
@@ -114,8 +121,53 @@ describe("displayNoResult", () => {
 });
 
 describe("handleSubmit", () => {
-  test("", () => {
+  test("should call on function createHtml", async () => {
     //arrange
-    let spy = jest.spyOn(movieAppFunctions, "createHtml");
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="star" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest.spyOn(movieAppFunctions, "createHtml").mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test("should call on function createHtml", async () => {
+    //arrange
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="star" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest.spyOn(movieAppFunctions, "createHtml").mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test("should call on function displayNoResult", async () => {
+    //arrange
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="star" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest
+      .spyOn(movieAppFunctions, "displayNoResult")
+      .mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalled();
   });
 });

@@ -35,26 +35,26 @@ let mockData: IMovie[] = [
   },
 ];
 
-// jest.mock("axios", () => ({
-//   get: async (searchText: string) => {
-//     return new Promise(
-//       (resolve, reject) => {
-//         if (searchText.length > 2) {
-//           resolve({ data: { Search: mockData } });
-//         } else {
-//           reject();
-//         }
-//       }
-//       //vi härmar objektet som hämtas från axios
-//     );
-//   },
-// }));
-
 jest.mock("axios", () => ({
-  get: async () => {
-    return new Promise((resolve) => resolve({ data: { Search: mockData } }));
+  get: async (searchText: string) => {
+    return new Promise(
+      (resolve, reject) => {
+        if (searchText.length > 2) {
+          resolve({ data: { Search: mockData } });
+        } else {
+          reject({ data: [] });
+        }
+      }
+      //vi härmar objektet som hämtas från axios
+    );
   },
 }));
+
+// jest.mock("axios", () => ({
+//   get: async () => {
+//     return new Promise((resolve) => resolve({ data: { Search: mockData } }));
+//   },
+// }));
 
 describe("getData", () => {
   test("should get mock data", async () => {

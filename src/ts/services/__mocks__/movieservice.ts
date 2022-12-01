@@ -1,5 +1,6 @@
 import { IMovie } from "../../models/Movie";
 import { IOmdbResponse } from "../../models/IOmdbResponse";
+import { resolveObjectURL } from "buffer";
 
 let mockData: IMovie[] = [
   {
@@ -28,7 +29,8 @@ let mockData: IMovie[] = [
 ];
 
 export const getData = async (searchText: string): Promise<IMovie[]> => {
-  return new Promise((resolve) => {
-    resolve(mockData);
+  return new Promise((resolve, reject) => {
+    if (searchText) resolve(mockData);
+    else reject();
   });
 };
