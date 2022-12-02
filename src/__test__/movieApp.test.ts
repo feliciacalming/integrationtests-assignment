@@ -66,23 +66,7 @@ describe("createHtml", () => {
 });
 
 describe("displayNoResult", () => {
-  // test("should add innerhtml to p-tag", () => {
-  //   //arrange
-  //   document.body.innerHTML = `<div><p></p></div>`;
-  //   let container: HTMLDivElement = document.querySelector(
-  //     "div"
-  //   ) as HTMLDivElement;
-
-  //   //act
-  //   movieAppFunctions.displayNoResult(container);
-
-  //   //assert
-  //   expect(
-  //     (document.querySelector("p") as HTMLParagraphElement).innerHTML
-  //   ).toBe("Inga sökresultat att visa!!");
-  // });
-
-  test("should append p-tag to div", () => {
+  test("should append p-tag to div and display error message in noMessage", () => {
     //arrange
     document.body.innerHTML = `<div></div>`;
     let container: HTMLDivElement = document.querySelector(
@@ -122,10 +106,28 @@ describe("handleSubmit", () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  test("should call on function displayNoResult", async () => {
+  test("should call on function displayNoResult in else", async () => {
     //arrange
     document.body.innerHTML = `<form id="searchForm">
     <input type="text" id="searchText" value="st" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest
+      .spyOn(movieAppFunctions, "displayNoResult")
+      .mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  test("should catch error and call function displayNoResult", async () => {
+    //arrange
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="" placeholder="Skriv titel här" />
     <button type="submit" id="search">Sök</button>
   </form>
   <div id="movie-container"></div>`;

@@ -41,9 +41,7 @@ describe("movieSort", () => {
   test("should sort list alphabetically from a-z", async () => {
     //arrange
     //act
-    // console.log(movies);
     functions.movieSort(movies);
-    // console.log(movies);
 
     //assert
     expect(movies[0].Title).toBe("Adams AW");
