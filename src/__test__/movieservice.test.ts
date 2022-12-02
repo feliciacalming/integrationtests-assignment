@@ -11,7 +11,7 @@ import axios from "axios";
 
 let mockData: IMovie[] = [
   {
-    Title: "Film1",
+    Title: "Per reser till Åre",
     imdbID: "123",
     Type: "film",
     Poster: "imageURL",
@@ -19,7 +19,7 @@ let mockData: IMovie[] = [
   },
 
   {
-    Title: "Film2",
+    Title: "Karlsson på loftet",
     imdbID: "1234",
     Type: "film",
     Poster: "imageURL",
@@ -27,7 +27,7 @@ let mockData: IMovie[] = [
   },
 
   {
-    Title: "Film3",
+    Title: "Adams AW",
     imdbID: "1235",
     Type: "film",
     Poster: "imageURL",
@@ -37,23 +37,19 @@ let mockData: IMovie[] = [
 
 jest.mock("axios", () => ({
   get: async (searchText: string) => {
-    return new Promise(
-      (resolve, reject) => {
-        let queryString = searchText;
-        let usp = new URLSearchParams(queryString);
-        let s = usp.get("s");
-        let newSearchText = `${s}`;
+    return new Promise((resolve, reject) => {
+      let queryString = searchText;
+      let usp = new URLSearchParams(queryString);
+      let s = usp.get("s");
+      let newSearchText = `${s}`;
 
-        if (newSearchText.length > 3) {
-          resolve({ data: { Search: mockData } });
-          console.log(searchText, "NUUUUUU");
-        } else {
-          reject({ data: [] });
-        }
+      if (newSearchText.length > 3) {
+        resolve({ data: { Search: mockData } });
+        console.log(searchText, "NUUUUUU");
+      } else {
+        reject({ data: [] });
       }
-      //vi härmar objektet som hämtas från axios
-      //om jag sätter if searchtext.length === 1 går den över till reject
-    );
+    });
   },
 }));
 
@@ -71,7 +67,7 @@ describe("getData", () => {
 
     //assert
     expect(result.length).toBe(3);
-    expect(result[0].Title).toBe("Film1");
+    expect(result[0].Title).toBe("Per reser till Åre");
   });
 
   test("should not get mockdata", async () => {
@@ -80,9 +76,9 @@ describe("getData", () => {
 
     //act
     let result: IMovie[] = await getData(searchText);
+    console.log("Listan e tom!!!", result);
 
     //assert
     expect(result.length).toBe(0);
-    // console.log(result);
   });
 });

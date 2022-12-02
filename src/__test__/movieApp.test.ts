@@ -65,25 +65,6 @@ describe("createHtml", () => {
   });
 });
 
-// describe("handleSubmit", () => {
-//   test("should blabla", () => {
-//     //arrange
-//     document.body.innerHTML = `<form id="searchForm">
-//     <input type="text" id="searchText" placeholder="Skriv titel här" />
-//     <button type="submit" id="search">Sök</button>
-//   </form><div id="movie-container"></div>`;
-//     let searchText = "";
-//     let movies: IMovie[];
-
-//     //act
-//     movieserviceFunctions.getData(searchText);
-//     movieAppFunctions.handleSubmit();
-
-//     //arrange
-//     expect(movi)
-//   });
-// });
-
 describe("displayNoResult", () => {
   // test("should add innerhtml to p-tag", () => {
   //   //arrange
