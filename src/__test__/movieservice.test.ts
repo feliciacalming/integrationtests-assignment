@@ -41,11 +41,10 @@ jest.mock("axios", () => ({
       let queryString = searchText;
       let usp = new URLSearchParams(queryString);
       let s = usp.get("s");
-      let newSearchText = `${s}`;
+      let newSearchText = `${s}`; //nu är newSearchText värdet för s=, dvs endast själva sökordet och inte hela URL:en.
 
       if (newSearchText.length > 3) {
         resolve({ data: { Search: mockData } });
-        console.log(searchText, "NUUUUUU");
       } else {
         reject({ data: [] });
       }
@@ -58,12 +57,13 @@ describe("getData", () => {
     jest.resetModules();
     jest.restoreAllMocks();
   });
+
   test("should get mock data", async () => {
     let searchText = "lord";
 
     //act
     let result: IMovie[] = await getData(searchText);
-    console.log("hej ", result);
+    // console.log("Listans innehåll: ", result);
 
     //assert
     expect(result.length).toBe(3);
@@ -76,7 +76,7 @@ describe("getData", () => {
 
     //act
     let result: IMovie[] = await getData(searchText);
-    console.log("Listan e tom!!!", result);
+    // console.log("Listan ska vara tom!", result);
 
     //assert
     expect(result.length).toBe(0);

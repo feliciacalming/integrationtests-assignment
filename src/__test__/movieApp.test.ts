@@ -15,6 +15,7 @@ describe("init", () => {
     jest.resetModules();
     jest.restoreAllMocks();
   });
+
   test("should call function handleSubmit on click", () => {
     //arrange
     document.body.innerHTML = `<form id="searchForm">
@@ -38,12 +39,76 @@ describe("init", () => {
   });
 });
 
+describe("handleSubmit", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
+  test("should call on function createHtml", async () => {
+    //arrange
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="star" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest.spyOn(movieAppFunctions, "createHtml").mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalledTimes(1);
+    document.body.innerHTML = "";
+  });
+
+  test("should call on function displayNoResult in else", async () => {
+    //arrange
+
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="st" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest
+      .spyOn(movieAppFunctions, "displayNoResult")
+      .mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalledTimes(1);
+    document.body.innerHTML = "";
+  });
+
+  test("should catch error and call function displayNoResult", async () => {
+    //arrange
+    document.body.innerHTML = `<form id="searchForm">
+    <input type="text" id="searchText" value="" placeholder="Skriv titel här" />
+    <button type="submit" id="search">Sök</button>
+  </form>
+  <div id="movie-container"></div>`;
+    let spy = jest
+      .spyOn(movieAppFunctions, "displayNoResult")
+      .mockReturnValue();
+
+    //act
+    await movieAppFunctions.handleSubmit();
+
+    //assert
+    expect(spy).toHaveBeenCalledTimes(1);
+    document.body.innerHTML = "";
+  });
+});
+
 describe("createHtml", () => {
   beforeEach(() => {
     jest.resetModules();
     jest.restoreAllMocks();
   });
-  test("should create html", async () => {
+
+  test("should create html for list of movies", async () => {
     //arrange
     let searchText = "moooo";
     let movies: IMovie[] = await movieserviceFunctions.getData(searchText);
@@ -66,7 +131,12 @@ describe("createHtml", () => {
 });
 
 describe("displayNoResult", () => {
-  test("should append p-tag to div and display error message in noMessage", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    jest.restoreAllMocks();
+  });
+
+  test("should create and append p-tag to div and display error message", () => {
     //arrange
     document.body.innerHTML = `<div></div>`;
     let container: HTMLDivElement = document.querySelector(
@@ -82,63 +152,5 @@ describe("displayNoResult", () => {
       "Inga sökresultat att visa"
     );
     document.body.innerHTML = "";
-  });
-});
-
-describe("handleSubmit", () => {
-  beforeEach(() => {
-    jest.resetModules();
-    jest.restoreAllMocks();
-  });
-  test("should call on function createHtml", async () => {
-    //arrange
-    document.body.innerHTML = `<form id="searchForm">
-    <input type="text" id="searchText" value="star" placeholder="Skriv titel här" />
-    <button type="submit" id="search">Sök</button>
-  </form>
-  <div id="movie-container"></div>`;
-    let spy = jest.spyOn(movieAppFunctions, "createHtml").mockReturnValue();
-
-    //act
-    await movieAppFunctions.handleSubmit();
-
-    //assert
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  test("should call on function displayNoResult in else", async () => {
-    //arrange
-    document.body.innerHTML = `<form id="searchForm">
-    <input type="text" id="searchText" value="st" placeholder="Skriv titel här" />
-    <button type="submit" id="search">Sök</button>
-  </form>
-  <div id="movie-container"></div>`;
-    let spy = jest
-      .spyOn(movieAppFunctions, "displayNoResult")
-      .mockReturnValue();
-
-    //act
-    await movieAppFunctions.handleSubmit();
-
-    //assert
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  test("should catch error and call function displayNoResult", async () => {
-    //arrange
-    document.body.innerHTML = `<form id="searchForm">
-    <input type="text" id="searchText" value="" placeholder="Skriv titel här" />
-    <button type="submit" id="search">Sök</button>
-  </form>
-  <div id="movie-container"></div>`;
-    let spy = jest
-      .spyOn(movieAppFunctions, "displayNoResult")
-      .mockReturnValue();
-
-    //act
-    await movieAppFunctions.handleSubmit();
-
-    //assert
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
