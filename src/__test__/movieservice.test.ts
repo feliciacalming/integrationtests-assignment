@@ -5,9 +5,6 @@
 import { getData } from "../ts/services/movieservice";
 import { IMovie } from "./../ts/models/Movie";
 import { expect, describe, test, jest, beforeEach } from "@jest/globals";
-import axios from "axios";
-
-// jest.mock("./../ts/services/movieservice.ts");
 
 let mockData: IMovie[] = [
   {
@@ -59,6 +56,8 @@ describe("getData", () => {
   });
 
   test("should get mock data", async () => {
+    //arrange
+    expect.assertions(4);
     let searchText = "lord";
 
     //act
@@ -68,10 +67,13 @@ describe("getData", () => {
     //assert
     expect(result.length).toBe(3);
     expect(result[0].Title).toBe("Per reser till Åre");
+    expect(result[1].Title).toBe("Karlsson på loftet");
+    expect(result[2].Title).toBe("Adams AW");
   });
 
-  test("should not get mockdata", async () => {
+  test("should not get mockdata when search term is less than 3 letters", async () => {
     //arrange
+    expect.assertions(1);
     let searchText = "bu";
 
     //act

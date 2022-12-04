@@ -1,42 +1,10 @@
 import { expect, describe, test, jest, beforeEach } from "@jest/globals";
 import { IMovie } from "../ts/models/Movie";
+import { mockData } from "./../../src/ts/services/__mocks__/movieservice";
 import * as functions from "./../ts/functions";
-import * as movieserviceFunctions from "./../ts/services/movieservice";
 
 describe("movieSort", () => {
-  let movies: IMovie[] = [
-    {
-      Title: "Per reser till Åre",
-      imdbID: "123",
-      Type: "film",
-      Poster: "imageURL",
-      Year: "1991",
-    },
-
-    {
-      Title: "Karlsson på loftet",
-      imdbID: "1234",
-      Type: "film",
-      Poster: "imageURL",
-      Year: "1992",
-    },
-
-    {
-      Title: "Adams AW",
-      imdbID: "1235",
-      Type: "film",
-      Poster: "imageURL",
-      Year: "1993",
-    },
-
-    {
-      Title: "Felles psykbryt",
-      imdbID: "1235",
-      Type: "film",
-      Poster: "imageURL",
-      Year: "1993",
-    },
-  ];
+  let movies: IMovie[] = mockData;
 
   test("should sort list in alphabetical order from a-z", () => {
     //act

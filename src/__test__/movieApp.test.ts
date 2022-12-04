@@ -108,9 +108,9 @@ describe("createHtml", () => {
     jest.restoreAllMocks();
   });
 
-  test("should create html for list of movies", async () => {
+  test("should create html for list of mockData-movies", async () => {
     //arrange
-    let searchText = "moooo";
+    let searchText = "Neverending";
     let movies: IMovie[] = await movieserviceFunctions.getData(searchText);
 
     document.body.innerHTML = `<div id="movie-container"></div>`;
@@ -124,8 +124,8 @@ describe("createHtml", () => {
 
     //expect
     expect(document.querySelectorAll("h3")[0].innerHTML).toContain("Per");
-    expect(document.querySelectorAll("h3").length).toBe(3);
-    expect(document.querySelectorAll("div.movie").length).toBe(3);
+    expect(document.querySelectorAll("h3").length).toBe(4);
+    expect(document.querySelectorAll("div.movie").length).toBe(4);
     document.body.innerHTML = "";
   });
 });

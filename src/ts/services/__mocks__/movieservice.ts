@@ -1,8 +1,6 @@
 import { IMovie } from "../../models/Movie";
-import { IOmdbResponse } from "../../models/IOmdbResponse";
-import { resolveObjectURL } from "buffer";
 
-let mockData: IMovie[] = [
+export const mockData: IMovie[] = [
   {
     Title: "Per reser till Åre",
     imdbID: "123",
@@ -21,6 +19,14 @@ let mockData: IMovie[] = [
 
   {
     Title: "Adams AW",
+    imdbID: "1235",
+    Type: "film",
+    Poster: "imageURL",
+    Year: "1993",
+  },
+
+  {
+    Title: "Felles psykbryt",
     imdbID: "1235",
     Type: "film",
     Poster: "imageURL",
